@@ -6,9 +6,9 @@ module Railsystem
       def presentation
         {
           error: {
-            code: @code,
-            message: @error.message,
-            exception: @error.class.name,
+            code: status,
+            message: @object.message,
+            exception: @object.class.name,
             backtrace: backtrace
           }
         }
@@ -17,8 +17,9 @@ module Railsystem
       private
 
       def backtrace
-        @error.backtrace && Rails.backtrace_cleaner.clean(@error.backtrace)
+        @object.backtrace && Rails.backtrace_cleaner.clean(@object.backtrace)
       end
     end
   end
 end
+

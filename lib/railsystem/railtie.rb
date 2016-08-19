@@ -1,13 +1,13 @@
+require "railsystem"
+require "railsystem/rails/controller"
 require "rails/railtie"
-require "railsystem/middlewares/json_error_middleware"
 
 module Railsystem
-  class Railtie < Rails::Railtie
+  class Railtie < ::Rails::Railtie
     config.eager_load_namespaces << Railsystem
 
-    initializer "railsystem.error_handling" do |app|
-      app.middleware.swap("ActionDispatch::ShowExceptions",
-                          "Railsystem::Middlewares::JsonErrorMiddleware")
+    initializer "railsystem.presenters.renderer" do |app|
+      ApplicationController.include Railsystem::Rails::Controller
     end
   end
 end

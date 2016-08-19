@@ -13,21 +13,20 @@ module Railsystem
 
       private
 
-      def error(code, error)
+      def error(status, error)
         presenter = if error.is_a?(Exception)
                       Presenters::ExceptionPresenter
                     else
                       Presenters::ErrorPresenter
                     end
-        view = presenter.new(code, error)
+        json = presenter.new(error, status: status).to_json
         charset = ActionDispatch::Response.default_charset
-        json = view.to_json
         headers = {
           "Content-Type" => "application/json; charset=#{charset}",
           "Content-Length" => json.bytesize.to_s
         }
 
-        [view.status, headers, [json]]
+        [status, headers, [json]]
       end
     end
   end
