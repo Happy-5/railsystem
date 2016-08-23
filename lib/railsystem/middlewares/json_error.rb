@@ -1,8 +1,8 @@
-require "railsystem/middlewares/application_middleware"
+require "railsystem/middlewares/base"
 
 module Railsystem
   module Middlewares
-    class JsonErrorMiddleware < Middlewares::ApplicationMiddleware
+    class JsonError < Middlewares::Base
 
       def call(env)
         @app.call(env)

@@ -1,6 +1,6 @@
 module Railsystem
   module Presenters
-    class BasicPresenter
+    class Basic
       def initialize(object, **options)
         @options = options.dup
         @options[:status] = infer_status(options[:status])

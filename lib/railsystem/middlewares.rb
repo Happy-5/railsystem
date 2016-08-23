@@ -1,5 +1,5 @@
-require "railsystem/middlewares/application_middleware"
-require "railsystem/middlewares/json_error_middleware"
+require "railsystem/middlewares/base"
+require "railsystem/middlewares/json_error"
 
 module Railsystem
   module Middlewares

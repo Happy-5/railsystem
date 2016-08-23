@@ -1,11 +1,11 @@
 require "railsystem/response"
-require "railsystem/presenters/array_presenter"
-require "railsystem/presenters/basic_presenter"
-require "railsystem/presenters/error_presenter"
+require "railsystem/presenters/array"
+require "railsystem/presenters/basic"
+require "railsystem/presenters/error"
 
 module Railsystem
   module Presenters
-    class ApplicationPresenter < Presenters::BasicPresenter
+    class Base < Presenters::Basic
       def self.new(response, **options)
         return super unless response.is_a?(Response::Object)
 
@@ -15,13 +15,13 @@ module Railsystem
         when :created
           super(response.data, status(options, 201))
         when :not_allowed
-          ErrorPresenter.new(response.error, status(options, 403))
+          Presenters::Error.new(response.error, status(options, 403))
         when :not_found
-          ErrorPresenter.new(response.error, status(options, 404))
+          Presenters::Error.new(response.error, status(options, 404))
         when :invalid
-          ErrorPresenter.new(response.error, status(options, 422))
+          Presenters::Error.new(response.error, status(options, 422))
         else
-          ErrorPresenter.new(response.error, status(options, 400))
+          Presenters::Error.new(response.error, status(options, 400))
         end
       end
 
@@ -30,7 +30,7 @@ module Railsystem
       end
 
       def self.array(objects, **options)
-        ArrayPresenter.new(objects, **options, presenter: self)
+        Presenters::Array.new(objects, **options, presenter: self)
       end
     end
   end

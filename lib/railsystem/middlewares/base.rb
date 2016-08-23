@@ -1,8 +1,8 @@
-require "railsystem/presenters/error_presenter"
+require "railsystem/presenters/error"
 
 module Railsystem
   module Middlewares
-    class ApplicationMiddleware
+    class Base
       def initialize(app)
         @app = app
       end
@@ -15,9 +15,9 @@ module Railsystem
 
       def error(status, error)
         presenter = if error.is_a?(Exception)
-                      Presenters::ExceptionPresenter
+                      Presenters::Exception
                     else
-                      Presenters::ErrorPresenter
+                      Presenters::Error
                     end
         json = presenter.new(error, status: status).to_json
         charset = ActionDispatch::Response.default_charset

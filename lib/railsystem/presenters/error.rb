@@ -1,8 +1,8 @@
-require "railsystem/presenters/basic_presenter"
+require "railsystem/presenters/basic"
 
 module Railsystem
   module Presenters
-    class ErrorPresenter < Presenters::BasicPresenter
+    class Error < Presenters::Basic
       def presentation
         {
           error: {

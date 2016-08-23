@@ -1,9 +1,9 @@
 require "railsystem/response"
-require "railsystem/presenters/basic_presenter"
+require "railsystem/presenters/basic"
 
 module Railsystem
   module Presenters
-    class ArrayPresenter < BasicPresenter
+    class Array < Presenters::Basic
       def initialize(objects, **options)
         @objects = objects.is_a?(Response::Object) ? objects.data : objects
         @options = options.dup

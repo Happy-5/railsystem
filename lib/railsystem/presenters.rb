@@ -1,8 +1,8 @@
-require "railsystem/presenters/application_presenter"
-require "railsystem/presenters/array_presenter"
-require "railsystem/presenters/basic_presenter"
-require "railsystem/presenters/error_presenter"
-require "railsystem/presenters/exception_presenter"
+require "railsystem/presenters/base"
+require "railsystem/presenters/array"
+require "railsystem/presenters/basic"
+require "railsystem/presenters/error"
+require "railsystem/presenters/exception"
 
 module Railsystem
   module Presenters

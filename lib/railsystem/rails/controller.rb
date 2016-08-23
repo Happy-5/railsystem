@@ -1,4 +1,4 @@
-require "railsystem/presenters/error_presenter"
+require "railsystem/presenters/error"
 
 module Railsystem
   module Rails
@@ -11,7 +11,7 @@ module Railsystem
       end
 
       def error(code, message)
-        Presenters::ErrorPresenter.new(message, status: code)
+        Presenters::Error.new(message, status: code)
       end
     end
   end
