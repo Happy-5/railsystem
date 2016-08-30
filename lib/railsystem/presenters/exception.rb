@@ -17,7 +17,7 @@ module Railsystem
       private
 
       def backtrace
-        @object.backtrace && Rails.backtrace_cleaner.clean(@object.backtrace)
+        @object.backtrace && ::Rails.backtrace_cleaner.clean(@object.backtrace)
       end
     end
   end

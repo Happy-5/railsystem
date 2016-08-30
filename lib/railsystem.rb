@@ -1,7 +1,7 @@
 require "railsystem/version"
 require "railsystem/middlewares"
-require "railsystem/query"
 require "railsystem/presenters"
+require "railsystem/repositories"
 require "railsystem/response"
 
 module Railsystem
