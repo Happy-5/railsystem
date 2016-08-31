@@ -35,8 +35,8 @@ module Railsystem
       Invalid.new(error, data)
     end
 
-    def not_allowed_to(action, data = nil)
-      NotAllowed.new(action, data)
+    def not_allowed(error, data = nil)
+      NotAllowed.new(error, data)
     end
   end
 end
