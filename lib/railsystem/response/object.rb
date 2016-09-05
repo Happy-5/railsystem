@@ -49,7 +49,7 @@ module Railsystem
 
     class Invalid < Failure
       def error
-        Array(@error).first
+        errors.first
       end
 
       def errors

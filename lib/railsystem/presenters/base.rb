@@ -15,13 +15,13 @@ module Railsystem
         when :created
           super(response.data, status(options, 201))
         when :not_allowed
-          Presenters::Error.new(response.error, status(options, 403))
+          error_presenter(response.error, status(options, 403))
         when :not_found
-          Presenters::Error.new(response.error, status(options, 404))
+          error_presenter(response.error, status(options, 404))
         when :invalid
-          Presenters::Error.new(response.error, status(options, 422))
+          error_presenter(response.error, status(options, 422))
         else
-          Presenters::Error.new(response.error, status(options, 400))
+          error_presenter(response.error, status(options, 400))
         end
       end
 
@@ -31,6 +31,10 @@ module Railsystem
 
       def self.array(objects, **options)
         Presenters::Array.new(objects, **options, presenter: self)
+      end
+
+      def self.error_presenter(*args)
+        Presenters::Error.new(*args)
       end
     end
   end

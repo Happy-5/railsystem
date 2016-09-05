@@ -12,26 +12,27 @@ module Railsystem
 
       private
 
-      def render_error(env, error)
+      def render_error(env, err)
         debug = ::Rails.application.config.consider_all_requests_local
 
-        case error
+        case err
         when ::ActionDispatch::ParamsParser::ParseError
           return error(400, <<-ERROR.squish)
-        There was a problem in the JSON you submitted: #{error}
+            There was a problem in the JSON you submitted: #{err}
           ERROR
 
         when ::ActionController::RoutingError
           return error(404, <<-ERROR.squish)
-        No route matches [#{env['REQUEST_METHOD']}] #{env['PATH_INFO'].inspect}
+            No route matches [#{env['REQUEST_METHOD']}]
+            #{env['PATH_INFO'].inspect}
           ERROR
 
         when ::ActionController::ParameterMissing
-          return error(400, error.message)
+          return error(400, err.message)
 
         else
-          return error(500, debug ? error : <<-ERROR.squish)
-        Sorry, there's an error on our side. We're working on it!
+          return error(500, debug ? err : <<-ERROR.squish)
+            Sorry, there's an error on our side. We're working on it!
           ERROR
 
         end

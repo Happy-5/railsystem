@@ -8,11 +8,12 @@ module Railsystem
     def respond_with_model(model, options = {})
       options = options.clone
       action = options.delete(:action)
-      return invalid("Failed to " + action) if !model
-      return created(model) if model.errors.none? && model.previous_changes[:id]
-      return success(model) if model.errors.none?
+      error_message = action ? "Failed to #{action}" : "Action failed"
 
-      invalid(CustomMessage[model.errors, options], model)
+      return invalid(error_message) if !model
+      return invalid_model(model, options) if model.errors.any?
+      return created(model) if model.previous_changes[:id]
+      return success(model)
     end
 
     def success(data)
@@ -33,6 +34,10 @@ module Railsystem
 
     def invalid(error, data = nil)
       Invalid.new(error, data)
+    end
+
+    def invalid_model(model, options = {})
+      invalid(CustomMessage[model.errors, options], model)
     end
 
     def not_allowed(error, data = nil)
