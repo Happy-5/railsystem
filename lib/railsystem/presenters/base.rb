@@ -14,6 +14,8 @@ module Railsystem
           super(response.data, status(options, 200))
         when :created
           super(response.data, status(options, 201))
+        when :unauthorized
+          error_presenter(response.error, status(options, 401))
         when :not_allowed
           error_presenter(response.error, status(options, 403))
         when :not_found
