@@ -16,11 +16,11 @@ module Railsystem
       return success(model)
     end
 
-    def success(data)
+    def success(data = nil)
       Success.new(data)
     end
 
-    def created(data)
+    def created(data = nil)
       Created.new(data)
     end
 
@@ -28,11 +28,11 @@ module Railsystem
       Failure.new(error, data)
     end
 
-    def not_found(error, data = nil)
+    def not_found(error = nil, data = nil)
       NotFound.new(error, data)
     end
 
-    def invalid(error, data = nil)
+    def invalid(error = nil, data = nil)
       Invalid.new(error, data)
     end
 
@@ -40,7 +40,7 @@ module Railsystem
       invalid(CustomMessage[model.errors, options], model)
     end
 
-    def not_allowed(error, data = nil)
+    def not_allowed(error = nil, data = nil)
       NotAllowed.new(error, data)
     end
   end
