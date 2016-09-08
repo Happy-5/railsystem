@@ -7,7 +7,7 @@ module Railsystem
       private
 
       def present(presenter)
-        render status: presenter.status, json: presenter
+        render status: presenter.status, json: presenter.root
       end
 
       def error(code, message)

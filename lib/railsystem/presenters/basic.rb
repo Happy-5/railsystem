@@ -1,6 +1,10 @@
 module Railsystem
   module Presenters
     class Basic
+      def self.root
+        nil
+      end
+
       def initialize(object, **options)
         @options = options.dup
         @options[:status] = infer_status(options[:status])
@@ -9,6 +13,11 @@ module Railsystem
 
       def presentation
         @object.to_h
+      end
+
+      def root
+        return self if !root_key
+        return Basic.new({root_key => presentation}, **@options)
       end
 
       def status
@@ -24,6 +33,10 @@ module Railsystem
       end
 
       private
+
+      def root_key
+        self.class.root
+      end
 
       def infer_status(status)
         status = status || :ok

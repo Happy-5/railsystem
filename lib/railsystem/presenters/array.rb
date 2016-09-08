@@ -17,6 +17,12 @@ module Railsystem
       def presentation
         @objects.map {|o| element_presenter.new(o, @options).presentation }
       end
+
+      private
+
+      def root_key
+        element_presenter.root
+      end
     end
   end
 end
