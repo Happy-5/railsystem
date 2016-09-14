@@ -25,14 +25,18 @@ module Railsystem
       end
 
       def as_json(*args)
-        presentation.as_json(*args)
+        send(presentation_method).as_json(*args)
       end
 
       def to_json(*args)
-        presentation.to_json(*args)
+        send(presentation_method).to_json(*args)
       end
 
       private
+
+      def presentation_method
+        @options[:use] || :presentation
+      end
 
       def root_key
         self.class.root

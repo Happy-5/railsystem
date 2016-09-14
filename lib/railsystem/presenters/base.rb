@@ -14,6 +14,13 @@ module Railsystem
           super(response.data, status(options, 200))
         when :created
           super(response.data, status(options, 201))
+        else
+          failure(response, **options)
+        end
+      end
+
+      def self.failure(response, **options)
+        case response.type
         when :unauthorized
           error_presenter(response.error, status(options, 401))
         when :not_allowed
