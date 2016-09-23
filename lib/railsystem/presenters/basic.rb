@@ -8,16 +8,13 @@ module Railsystem
       def initialize(object, **options)
         @options = options.dup
         @options[:status] = infer_status(options[:status])
+        @options[:use] ||= :presentation
         @object = object
-      end
-
-      def presentation
-        @object.to_h
       end
 
       def root
         return self if !root_key
-        return Basic.new({root_key => presentation}, **@options)
+        return Basic.new({root_key => as_json}, **@options.except(:use))
       end
 
       def status
@@ -34,8 +31,12 @@ module Railsystem
 
       private
 
+      def presentation
+        @object.to_h
+      end
+
       def presentation_method
-        @options[:use] || :presentation
+        @options[:use]
       end
 
       def root_key

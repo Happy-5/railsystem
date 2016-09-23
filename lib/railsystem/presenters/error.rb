@@ -7,6 +7,8 @@ module Railsystem
         nil
       end
 
+      private
+
       def presentation
         {
           error: {
@@ -14,6 +16,10 @@ module Railsystem
             message: @object
           }
         }
+      end
+
+      def presentation_method
+        :presentation
       end
     end
   end

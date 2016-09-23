@@ -3,6 +3,8 @@ require "railsystem/presenters/error"
 module Railsystem
   module Presenters
     class Exception < Presenters::Error
+      private
+
       def presentation
         {
           error: {
@@ -14,7 +16,9 @@ module Railsystem
         }
       end
 
-      private
+      def presentation_method
+        :presentation
+      end
 
       def backtrace
         @object.backtrace && ::Rails.backtrace_cleaner.clean(@object.backtrace)

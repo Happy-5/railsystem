@@ -14,11 +14,15 @@ module Railsystem
         @options[:presenter]
       end
 
+      private
+
       def presentation
-        @objects.map {|o| element_presenter.new(o, @options).presentation }
+        @objects.map {|o| element_presenter.new(o, @options) }
       end
 
-      private
+      def presentation_method
+        :presentation
+      end
 
       def root_key
         element_presenter.root
