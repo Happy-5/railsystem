@@ -74,7 +74,7 @@ module Railsystem
           filter_method = "filter_by_#{key}"
 
           if respond_to?(filter_method, true)
-            @scope = send(filter_method, value)
+            @scope = send(filter_method, value) || @scope
           end
         end
       end
