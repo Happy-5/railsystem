@@ -5,7 +5,7 @@ module Railsystem
   module Presenters
     class Array < Presenters::Basic
       def initialize(objects, **options)
-        @objects = objects.is_a?(Response::Object) ? objects.data : objects
+        @object = objects.is_a?(Response::Object) ? objects.data : objects
         @options = options.dup
         @options[:status] = infer_status(options[:status])
       end
@@ -17,7 +17,7 @@ module Railsystem
       private
 
       def presentation
-        @objects.map {|o| element_presenter.new(o, @options) }
+        @object.map {|o| element_presenter.new(o, @options) }
       end
 
       def presentation_method

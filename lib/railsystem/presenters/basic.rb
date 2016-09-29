@@ -22,10 +22,12 @@ module Railsystem
       end
 
       def as_json(*args)
+        return nil if @object.nil?
         send(presentation_method).as_json(*args)
       end
 
       def to_json(*args)
+        return nil if @object.nil?
         send(presentation_method).to_json(*args)
       end
 
