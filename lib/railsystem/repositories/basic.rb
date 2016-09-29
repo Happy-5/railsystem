@@ -19,8 +19,13 @@ module Railsystem
         wrap(@scope, options)
       end
 
-      def [](id)
-        load(@scope.where(id: id), 1).first
+      def include(*associations)
+        scope = @scope
+        associations.each do |association|
+          scope = send("include_#{association}") || scope
+        end
+
+        wrap(scope)
       end
 
       def first
