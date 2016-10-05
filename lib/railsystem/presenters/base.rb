@@ -15,7 +15,7 @@ module Railsystem
         when :created
           super(response.data, status(options, 201))
         else
-          failure(response, **options)
+          failure(response, **options.except(:status))
         end
       end
 
