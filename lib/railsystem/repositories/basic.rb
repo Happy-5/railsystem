@@ -20,12 +20,12 @@ module Railsystem
       end
 
       def include(*associations)
-        scope = @scope
+        new_repo = wrap(scope)
         associations.each do |association|
-          scope = send("include_#{association}") || scope
+          new_scope = new_repo.send("include_#{association}")
+          new_repo.instance_variable_set("@scope", new_scope) if new_scope
         end
-
-        wrap(scope)
+        new_repo
       end
 
       def first
