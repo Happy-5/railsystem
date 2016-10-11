@@ -21,7 +21,7 @@ module Railsystem
 
       def self.failure(response, **options)
         case response.type
-        when :unauthorized
+        when :unauthenticated
           error_presenter(response.error, status(options, 401))
         when :not_allowed
           error_presenter(response.error, status(options, 403))

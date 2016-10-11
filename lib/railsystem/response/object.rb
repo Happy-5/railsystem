@@ -41,7 +41,7 @@ module Railsystem
       def initialize(error, data) @error, @data = error, data end
     end
 
-    class Unauthorized < Failure
+    class Unauthenticated < Failure
     end
 
     class NotFound < Failure

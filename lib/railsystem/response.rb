@@ -28,8 +28,8 @@ module Railsystem
       Failure.new(error, data)
     end
 
-    def unauthorized(error = nil, data = nil)
-      Unauthorized.new(error, data)
+    def unauthenticated(error = nil, data = nil)
+      Unauthenticated.new(error, data)
     end
 
     def not_found(error = nil, data = nil)
