@@ -39,7 +39,11 @@ module Railsystem
       end
 
       def self.array(objects, **options)
-        Presenters::Array.new(objects, **options, presenter: self)
+        if objects.respond_to?(:success?) && !objects.success?
+          failure(objects, **options.except(:status))
+        else
+          Presenters::Array.new(objects, **options, presenter: self)
+        end
       end
 
       def self.error_presenter(*args)
