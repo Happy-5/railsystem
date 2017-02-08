@@ -2,29 +2,51 @@ module Railsystem
   module Repositories
     class Basic
       include Enumerable
-      attr_reader :scope
-
-      def initialize(scope = default_scope, options = nil)
-        if scope.is_a?(Hash) && !options
+      def initialize(scope = default_scope, options = nil, includes = nil)
+        if scope.is_a?(Hash) && !includes
+          includes = options
           options = scope
           scope = default_scope
         end
 
-        @options = default_options.merge(options.to_h)
+        @options = Hash(default_options.merge(options.to_h))
+        @includes = Array(includes)
         @scope = scope
-        apply_filters
+        setup
+        apply_filters(@options)
+        apply_includes(@includes)
+      end
+
+      def initialize_copy(repo)
+        super
+        @scope = repo.scope
+        @options = repo.options
+        @includes = repo.includes
+      end
+
+      def scope
+        @scope.clone
+      end
+
+      def options
+        @options.clone
+      end
+
+      def includes
+        @includes.clone
       end
 
       def filter(options)
-        wrap(@scope, options)
+        new_repo = clone
+        new_repo.instance_variable_set("@options", @options.merge(options))
+        new_repo.send(:apply_filters, options)
+        new_repo
       end
 
       def include(*associations)
-        new_repo = wrap(scope)
-        associations.each do |association|
-          new_scope = new_repo.send("include_#{association}")
-          new_repo.instance_variable_set("@scope", new_scope) if new_scope
-        end
+        new_repo = clone
+        new_repo.instance_variable_set("@includes", @includes | associations)
+        new_repo.send(:apply_includes, associations)
         new_repo
       end
 
@@ -54,8 +76,13 @@ module Railsystem
 
       private
 
-      def wrap(scope, options = {})
-        self.class.new(scope, @options.merge(options))
+      def setup
+      end
+
+      def update_scope(scope)
+        new_repo = clone
+        new_repo.instance_variable_set("@scope", scope)
+        new_repo
       end
 
       def load(scope, limit = nil)
@@ -74,13 +101,20 @@ module Railsystem
         {}
       end
 
-      def apply_filters
-        @options.each do |key, value|
-          filter_method = "filter_by_#{key}"
+      def apply_filters(options)
+        options.each do |key, value|
+          method = "filter_by_#{key}"
 
-          if respond_to?(filter_method, true)
-            @scope = send(filter_method, value) || @scope
+          if respond_to?(method, true)
+            @scope = send(method, value) || @scope
           end
+        end
+      end
+
+      def apply_includes(associations)
+        associations.each do |value|
+          method = "include_#{value}"
+          @scope = send(method) || @scope
         end
       end
     end
