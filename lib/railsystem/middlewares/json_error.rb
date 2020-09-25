@@ -7,6 +7,7 @@ module Railsystem
       def call(env)
         @app.call(env)
       rescue ::Exception => error
+        $stderr.puts "#{error}\n  #{error.backtrace * "\n  "}"
         render_error(env, error)
       end
 
