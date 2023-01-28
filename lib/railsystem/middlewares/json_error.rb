@@ -17,7 +17,7 @@ module Railsystem
         debug = ::Rails.application.config.consider_all_requests_local
 
         case err
-        when ::ActionDispatch::ParamsParser::ParseError
+        when ::ActionDispatch::Http::Parameters::ParseError
           return error(400, <<-ERROR.squish)
             There was a problem in the JSON you submitted: #{err}
           ERROR
