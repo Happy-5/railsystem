@@ -5,7 +5,7 @@ module Railsystem
         nil
       end
 
-      def initialize(object, **options)
+      def initialize(object, options)
         @options = options.dup
         @options[:status] = infer_status(options[:status])
         @options[:use] ||= :presentation
@@ -13,8 +13,9 @@ module Railsystem
       end
 
       def root
-        return self if !root_key
-        return Basic.new({root_key => as_json}, **@options.except(:use))
+        return self unless root_key
+
+        Basic.new({ root_key => as_json }, **@options.except(:use))
       end
 
       def status
@@ -23,11 +24,13 @@ module Railsystem
 
       def as_json(*args)
         return nil if @object.nil?
+
         send(presentation_method).as_json(*args)
       end
 
       def to_json(*args)
         return nil if @object.nil?
+
         send(presentation_method).to_json(*args)
       end
 
@@ -46,10 +49,10 @@ module Railsystem
       end
 
       def infer_status(status)
-        status = status || :ok
-        status = Rack::Utils::SYMBOL_TO_STATUS_CODE[status] || status
+        status ||= :ok
+
+        Rack::Utils::SYMBOL_TO_STATUS_CODE[status] || status
       end
     end
   end
 end
-

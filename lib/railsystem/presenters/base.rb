@@ -6,7 +6,7 @@ require "railsystem/presenters/error"
 module Railsystem
   module Presenters
     class Base < Presenters::Basic
-      def self.new(response, **options)
+      def self.new(response, options)
         return super unless response.is_a?(Response::Object)
 
         case response.type
@@ -35,7 +35,7 @@ module Railsystem
       end
 
       def self.status(options, default)
-        {status: default}.merge!(options)
+        { status: default }.merge!(options)
       end
 
       def self.array(objects, **options)
@@ -52,4 +52,3 @@ module Railsystem
     end
   end
 end
-
