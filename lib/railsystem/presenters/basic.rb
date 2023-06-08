@@ -5,7 +5,7 @@ module Railsystem
         nil
       end
 
-      def initialize(object, options)
+      def initialize(object, options = {})
         @options = options.dup
         @options[:status] = infer_status(options[:status])
         @options[:use] ||= :presentation

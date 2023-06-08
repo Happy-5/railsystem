@@ -6,7 +6,7 @@ require "railsystem/presenters/error"
 module Railsystem
   module Presenters
     class Base < Presenters::Basic
-      def self.new(response, options)
+      def self.new(response, options = {})
         return super unless response.is_a?(Response::Object)
 
         case response.type
