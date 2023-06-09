@@ -4,7 +4,7 @@ require "railsystem/presenters/basic"
 module Railsystem
   module Presenters
     class Array < Presenters::Basic
-      def initialize(objects, **options)
+      def initialize(objects, options)
         @object = objects.is_a?(Response::Object) ? objects.data : objects
         @options = options.dup
         @options[:status] = infer_status(options[:status])
@@ -17,7 +17,7 @@ module Railsystem
       private
 
       def presentation
-        @object.map {|o| element_presenter.new(o, @options) }
+        @object.map { |o| element_presenter.new(o, @options) }
       end
 
       def presentation_method
@@ -30,4 +30,3 @@ module Railsystem
     end
   end
 end
-

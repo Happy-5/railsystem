@@ -15,11 +15,11 @@ module Railsystem
         when :created
           super(response.data, status(options, 201))
         else
-          failure(response, **options.except(:status))
+          failure(response, options.except(:status))
         end
       end
 
-      def self.failure(response, **options)
+      def self.failure(response, options)
         case response.type
         when :unauthenticated
           error_presenter(response.error, status(options, 401))
@@ -38,11 +38,12 @@ module Railsystem
         { status: default }.merge!(options)
       end
 
-      def self.array(objects, **options)
+      def self.array(objects, options = {})
         if objects.respond_to?(:success?) && !objects.success?
-          failure(objects, **options.except(:status))
+          failure(objects, options.except(:status))
         else
-          Presenters::Array.new(objects, **options, presenter: self)
+          options[:presenter] = self
+          Presenters::Array.new(objects, options)
         end
       end
 
